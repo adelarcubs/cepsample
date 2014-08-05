@@ -15,7 +15,7 @@ return array(
                 'options' => array(
                     'route' => '/api/cep/[:id][.:format]',
                     'constraints' => array(
-                        'format' => '(json|xml)',
+                        'format' => '(json)',
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Cep',

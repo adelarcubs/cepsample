@@ -15,14 +15,29 @@ use Zend\Mvc\Controller\AbstractRestfulController;
 class CepController extends AbstractRestfulController {
 
     public function get($id) {
+        $content = array(
+            "CEP" => $id,
+            "Lagradouro" => null,
+            "Bairro" => null,
+            "Cidade" => null,
+            "Estado" => null
+        );
+        /**
+         * You may centralized this process through controller's event callback handler
+         */
+        $format = $this->getEvent()->getRouteMatch()->getParam('format');
         $response = $this->getResponse();
-        $response->setStatusCode(200);
-        $content = array('a' => 1);
+        if ($format == 'json') {
+            $contentType = 'application/json';
+            $adapter = '\Zend\Serializer\Adapter\Json';
+        }
+        // continue for xml, amf etc.
 
-        $response->getHeaders()->addHeaderLine('content-type', 'application/json');
-        $response->setContent($content);
+        $response->headers()->addHeaderLine('Content-Type', $contentType);
+        $adapter = new $adapter;
+        $response->setContent($adapter->serialize($content));
 
-       // return $response;
+        return $response;
     }
 
 }
