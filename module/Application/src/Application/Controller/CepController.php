@@ -32,8 +32,8 @@ class CepController extends AbstractRestfulController {
             $adapter = '\Zend\Serializer\Adapter\Json';
         }
         // continue for xml, amf etc.
-
-        $response->headers()->addHeaderLine('Content-Type', $contentType);
+        $response->setStatusCode(200);
+        $response->getHeaders()->addHeaderLine('Content-Type', $contentType);
         $adapter = new $adapter;
         $response->setContent($adapter->serialize($content));
 

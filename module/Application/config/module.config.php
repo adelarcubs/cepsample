@@ -13,7 +13,7 @@ return array(
             'cep' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/cep/[:id][.:format]',
+                    'route' => '/api/cep[.:format][/:id]',
                     'constraints' => array(
                         'format' => '(json)',
                     ),
