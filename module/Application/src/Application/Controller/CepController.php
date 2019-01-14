@@ -26,12 +26,18 @@ class CepController extends AbstractRestfulController {
          * You may centralized this process through controller's event callback handler
          */
         $format = $this->getEvent()->getRouteMatch()->getParam('format');
-        $response = $this->getResponse();
-        if ($format == 'json') {
-            $contentType = 'application/json';
-            $adapter = '\Zend\Serializer\Adapter\Json';
+	$response = $this->getResponse();
+        switch($format) {
+            case 'json':
+                $contentType = 'application/json';
+		$adapter = '\Zend\Serializer\Adapter\Json';
+                break;
+            #case 'xml':
+            #    $contentType = 'text/xml';
+            #    $adapter = '\Zend\Serializer\Adapter\Xml';
+            #    break;
         }
-        // continue for xml, amf etc.
+        // continue for xml.
         $response->setStatusCode(200);
         $response->getHeaders()->addHeaderLine('Content-Type', $contentType);
         $adapter = new $adapter;
